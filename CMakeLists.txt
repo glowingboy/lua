@@ -83,4 +83,24 @@ add_executable(lua_compiler ${PROJECT_SOURCE_DIR}/src/luac.c ${PROJECT_SOURCE_DI
 target_link_libraries(lua_compiler lua)
 
 
+# INSTALL
+
+message("install dir:" " ${CMAKE_INSTALL_PREFIX}")
+
+# lib lua
+install(TARGETS lua
+  ARCHIVE DESTINATION lib
+  )
+
+# headers
+install(FILES ${lib_srcs_fullpath} DESTINATION include)
+
+
+# set environment variables
+if(WIN32)
+  add_custom_target(gb_set_env ALL ${CMAKE_COMMAND} -E env LUA_ROOT=${CMAKE_INSTALL_PREFIX} setx LUA_ROOT ${CMAKE_INSTALL_PREFIX})
+else()
+  add_custom_target(gb_set_env ALL ${CMAKE_COMMAND} -E env LUA_ROOT=${CMAKE_INSTALL_PREFIX} export LUA_ROOT=${CMAKE_INSTALL_PREFIX})
+endif()
+
 
