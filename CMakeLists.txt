@@ -1,6 +1,6 @@
 #build lua 5.1.5 for WIN32 linux
 
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.0)
 project(lua)
 
 # if(NOT CMAKE_C_COMPILER STREQUAL "MSVC" OR NOT CMAKE_CXX_COMPILER STREQUAL "MSVC")
@@ -93,7 +93,14 @@ install(TARGETS lua
   )
 
 # headers
-install(FILES ${lib_srcs_fullpath} DESTINATION include)
+set(lib_headers)
+foreach(src ${lib_srcs_fullpath})
+  if(src MATCHES "[a-zA-Z0-9]*\\.h")
+    set(lib_headers ${lib_headers} ${src})
+  endif()
+endforeach()
+
+install(FILES ${lib_headers} DESTINATION include)
 
 
 # set environment variables
@@ -104,3 +111,4 @@ else()
 endif()
 
 
+message("cmake_prefix:" ${CMAKE_PREFIX_PATH})
