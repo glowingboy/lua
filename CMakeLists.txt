@@ -76,6 +76,14 @@ else()
   add_library(lua SHARED ${lib_srcs_fullpath})
 endif()
 
+if(UNIX)
+  find_library(libm NAMES m)
+
+  target_link_libraries(lua ${libm})
+endif()
+
+
+
 add_executable(lua_interpreter ${PROJECT_SOURCE_DIR}/src/lua.c ${PROJECT_SOURCE_DIR}/src/lua.h)
 target_link_libraries(lua_interpreter lua)
 
@@ -104,11 +112,8 @@ install(FILES ${lib_headers} DESTINATION include)
 
 
 # set environment variables
-if(WIN32)
-  add_custom_target(gb_set_env ALL ${CMAKE_COMMAND} -E env LUA_ROOT=${CMAKE_INSTALL_PREFIX} setx LUA_ROOT ${CMAKE_INSTALL_PREFIX})
-else()
-  add_custom_target(gb_set_env ALL ${CMAKE_COMMAND} -E env LUA_ROOT=${CMAKE_INSTALL_PREFIX} export LUA_ROOT=${CMAKE_INSTALL_PREFIX})
-endif()
-
-
-message("cmake_prefix:" ${CMAKE_PREFIX_PATH})
+# if(WIN32)
+#   add_custom_target(gb_set_env ALL ${CMAKE_COMMAND} -E env LUA_ROOT=${CMAKE_INSTALL_PREFIX} setx LUA_ROOT ${CMAKE_INSTALL_PREFIX})
+# else()
+#   add_custom_target(gb_set_env ALL ${CMAKE_COMMAND} -E env LUA_ROOT=${CMAKE_INSTALL_PREFIX} export LUA_ROOT=${CMAKE_INSTALL_PREFIX})
+# endif()
