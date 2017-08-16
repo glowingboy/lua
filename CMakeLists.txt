@@ -92,6 +92,9 @@ target_link_libraries(lua_compiler lua)
 
 
 # INSTALL
+if(UNIX)
+  set(CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lua)
+endif()
 
 message("install dir:" " ${CMAKE_INSTALL_PREFIX}")
 
