@@ -11,6 +11,7 @@ option(gbLUASTATIC "build a static lib?" ON)
 
 # for MSVC, should use "cmake --build . --config Release" to build a release version
 set(CMAKE_BUILD_TYPE "Release")
+
 # set(src_files)
 # set(header_files)
 
@@ -79,15 +80,30 @@ endif()
 if(UNIX)
   find_library(libm NAMES m)
 
-  target_link_libraries(lua ${libm})
+  target_link_libraries(lua ${libm}
+    readline
+    dl
+    )
+  
+  # for io.popen
+  add_definitions(-DLUA_USE_LINUX)
 endif()
 
 
-
 add_executable(lua_interpreter ${PROJECT_SOURCE_DIR}/src/lua.c ${PROJECT_SOURCE_DIR}/src/lua.h)
-target_link_libraries(lua_interpreter lua)
+set_target_properties(lua_interpreter
+  PROPERTIES
+  DEBUG_OUTPUT_NAME luad
+  RELEASE_OUTPUT_NAME lua
+  )
 
+target_link_libraries(lua_interpreter lua)
 add_executable(lua_compiler ${PROJECT_SOURCE_DIR}/src/luac.c ${PROJECT_SOURCE_DIR}/src/lua.h)
+set_target_properties(lua_compiler
+  PROPERTIES
+  DEBUG_OUTPUT_NAME luacd
+  RELEASE_OUTPUT_NAME luac
+  )
 target_link_libraries(lua_compiler lua)
 
 
@@ -102,6 +118,11 @@ message("install dir:" " ${CMAKE_INSTALL_PREFIX}")
 install(TARGETS lua
   ARCHIVE DESTINATION lib
   )
+
+#interpreter
+install(TARGETS lua_interpreter RUNTIME DESTINATION bin)
+#compiler
+install(TARGETS lua_compiler RUNTIME DESTINATION bin)
 
 # headers
 set(lib_headers)
