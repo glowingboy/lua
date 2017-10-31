@@ -10,7 +10,10 @@ project(lua)
 option(gbLUASTATIC "build a static lib?" ON)
 
 # for MSVC, should use "cmake --build . --config Release" to build a release version
-set(CMAKE_BUILD_TYPE "Release")
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE "Release")
+endif()
+
 
 # set(src_files)
 # set(header_files)
