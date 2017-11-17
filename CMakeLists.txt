@@ -80,6 +80,12 @@ else()
   add_library(lua SHARED ${lib_srcs_fullpath})
 endif()
 
+set_target_properties(lua
+  PROPERTIES
+  DEBUG_OUTPUT_NAME luad
+  RELEASE_OUTPUT_NAME lua
+  )
+
 if(UNIX)
   find_library(libm NAMES m)
 
