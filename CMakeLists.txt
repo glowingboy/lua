@@ -110,22 +110,17 @@ set_target_properties(lua_compiler
 target_link_libraries(lua_compiler lua)
 
 
-# INSTALL
-# if(UNIX)
-  set(CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lua)
-# endif()
-
-message("install dir:" " ${CMAKE_INSTALL_PREFIX}")
+set(CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lua)
 
 # lib lua
 install(TARGETS lua
-  ARCHIVE DESTINATION lib
+  ARCHIVE DESTINATION .
   )
 
 #interpreter
-install(TARGETS lua_interpreter RUNTIME DESTINATION bin)
+install(TARGETS lua_interpreter RUNTIME DESTINATION .)
 #compiler
-install(TARGETS lua_compiler RUNTIME DESTINATION bin)
+install(TARGETS lua_compiler RUNTIME DESTINATION .)
 
 # headers
 set(lib_headers)
@@ -135,7 +130,7 @@ foreach(src ${lib_srcs_fullpath})
   endif()
 endforeach()
 
-install(FILES ${lib_headers} DESTINATION include)
+install(FILES ${lib_headers} DESTINATION .)
 
 
 # set environment variables
