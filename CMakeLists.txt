@@ -115,9 +115,14 @@ set_target_properties(lua_compiler
   )
 target_link_libraries(lua_compiler lua)
 
+set(GB_DEFAULT_INSTALL_DIR)
+if(WIN32)
+  set(GB_DEFAULT_INSTALL_DIR "C:/Program\ Files\ (x86)")
+else()
+  set(GB_DEFAULT_INSTALL_DIR "/usr/local")
+endif()
 
-set(CMAKE_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}/lua)
-
+set(CMAKE_INSTALL_PREFIX ${GB_DEFAULT_INSTALL_DIR}/lua)
 # lib lua
 install(TARGETS lua
   ARCHIVE DESTINATION .
