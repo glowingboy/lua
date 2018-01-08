@@ -3,9 +3,11 @@
 cmake_minimum_required(VERSION 3.0)
 project(lua)
 
-# if(NOT CMAKE_C_COMPILER STREQUAL "MSVC" OR NOT CMAKE_CXX_COMPILER STREQUAL "MSVC")
-#   message(FATAL_ERROR "compiler is not MSVC")
-# endif()
+
+if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC OR ${CMAKE_C_COMPILER_ID} STREQUAL MSVC)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_CRT_SECURE_NO_WARNINGS=1")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_CRT_SECURE_NO_WARNINGS=1")
+endif()
 
 option(gbLUASTATIC "build a static lib?" ON)
 
