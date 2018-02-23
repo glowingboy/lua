@@ -502,7 +502,7 @@
 */
 
 #define LUA_NUMBER_DOUBLE
-#define LUA_NUMBER	double
+#define LUA_NUMBER	float 
 
 /*
 @@ LUAI_UACNUMBER is the result of an 'usual argument conversion'
@@ -518,11 +518,11 @@
 @@ LUAI_MAXNUMBER2STR is maximum size of previous conversion.
 @@ lua_str2number converts a string to a number.
 */
-#define LUA_NUMBER_SCAN		"%lf"
-#define LUA_NUMBER_FMT		"%.14g"
+#define LUA_NUMBER_SCAN		"%f"
+#define LUA_NUMBER_FMT		"%.7g"
 #define lua_number2str(s,n)	sprintf((s), LUA_NUMBER_FMT, (n))
-#define LUAI_MAXNUMBER2STR	32 /* 16 digits, sign, point, and \0 */
-#define lua_str2number(s,p)	strtod((s), (p))
+#define LUAI_MAXNUMBER2STR	16 /* 7 digits, sign, point, and \0 */
+#define lua_str2number(s,p)	strtof((s), (p))
 
 
 /*
@@ -534,8 +534,8 @@
 #define luai_numsub(a,b)	((a)-(b))
 #define luai_nummul(a,b)	((a)*(b))
 #define luai_numdiv(a,b)	((a)/(b))
-#define luai_nummod(a,b)	((a) - floor((a)/(b))*(b))
-#define luai_numpow(a,b)	(pow(a,b))
+#define luai_nummod(a,b)	((a) - floorf((a)/(b))*(b))
+#define luai_numpow(a,b)	(powf(a,b))
 #define luai_numunm(a)		(-(a))
 #define luai_numeq(a,b)		((a)==(b))
 #define luai_numlt(a,b)		((a)<(b))
